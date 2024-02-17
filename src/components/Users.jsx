@@ -28,6 +28,10 @@ export default function Users() {
     <div>
       <table>
         <thead>
+        <tr>
+                <th><Link to='/signup'><button>Add User</button></Link></th>
+               
+            </tr>
             <tr>
                 <th>Name</th>
                 <th>Email</th>
