@@ -2,9 +2,29 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const UserModel  = require('./models/UserModel.jsx');
+const { useState } = require('react');
 
 const app = express();
 require("dotenv").config();
+
+const [values, setValues] = useState({
+
+    post: 0,
+    put: 0,
+})
+const increasePostValue = () => {
+    setValues((prevValues) => ({
+      ...prevValues,
+      post: prevValues.post + 1,
+    }));
+  };
+
+  const increasePutValue = () => {
+    setValues((prevValues) => ({
+      ...prevValues,
+      put: prevValues.put + 1,
+    }));
+  };
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +53,10 @@ app.put('/editUser/:id', (req, res)=> {
         country: req.body.country})
     .then(users => res.json(users))
     .catch(err => res.json(err))
+    increasePutValue();
+    console.log(values.put);
+
+    
 })
 
 app.get('/getUser/:id', (req, res) => {
@@ -47,6 +71,8 @@ app.post("/createUser", (req, res) => {
     UserModel.create(req.body)
     .then(users => res.json(users))
     .catch(err => res.json(err))
+    increasePostValue();
+    console.log(values.post);
 })
 
 

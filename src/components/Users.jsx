@@ -7,6 +7,7 @@ import "./Users.css"
 export default function Users() {
 
     const [users, setUsers] = useState([])
+    const [totalUsers, setTotalUsers] = useState(0);
 
     const handleDelete = (id) =>{
       axios.delete('http://localhost:3001/deleteUser/'+id)
@@ -20,7 +21,10 @@ export default function Users() {
 
     useEffect(()=>{
       axios.get('http://localhost:3001')
-      .then(result => setUsers(result.data))
+      .then(result => {
+        setUsers(result.data)
+        setTotalUsers(result.data.length);
+      })
       .catch(err => console.log(err))
 
     }, [])
@@ -30,7 +34,7 @@ export default function Users() {
         <thead>
         <tr>
                 <th><Link to='/signup'><button>Add User</button></Link></th>
-               
+               <th>Total Users: {totalUsers}</th>
             </tr>
             <tr>
                 <th>Name</th>
